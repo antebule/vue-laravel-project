@@ -1,11 +1,12 @@
 <template>
-    <div>
+    <div style="text-align:center;">
         <!-- Button trigger modal -->
         <button
             type="button"
             class="btn btn-primary"
             data-toggle="modal"
             data-target="#staticBackdrop"
+            style="margin: 20px 0px 10px 0px;"
         >Reserve Thesis</button>
 
         <!-- Modal -->
@@ -59,26 +60,25 @@
             </div>
         </div>
 
-        <!-- Alert messages -->
-        <div
-            id="alert"
-            class="alert alert-success"
-            role="alert"
-            v-show="success"
-            style="position:absolute; right: 0px;"
-        >A simple success alert—check it out!</div>
+        <alert-message :message="alertMsg" :type="msgType" v-show="showMsg"></alert-message>
     </div>
 </template>
 
 <script>
+import alertMessage from "./AlertMessage";
 export default {
+    components: {
+        "alert-message": alertMessage
+    },
     data() {
         return {
             title: "",
             selected: "Choose...",
             teachers: [],
             dismiss: "",
-            success: false
+            showMsg: false,
+            alertMsg: "",
+            msgType: ""
         };
     },
     methods: {
@@ -88,26 +88,37 @@ export default {
             });
         },
         createThesisReservation() {
-            axios
-                .post("thesis/create", {
-                    title: this.title,
-                    status: "Awaiting teacher approval",
-                    user_id: this.userID,
-                    teacher_id: this.selected.id
-                })
-                .then(() => {
-                    this.title = "";
-                    this.selected = "Choose...";
-                    this.dismiss = "";
-                    this.success = true;
-                });
+            const newThesis = {
+                title: this.title,
+                status: "Awaiting teacher approval",
+                user_id: this.userID,
+                teacher_id: this.selected.id
+            };
+            axios.post("thesis/create", newThesis).then(res => {
+                this.alertMsg = this.title + " Thesis Successfully Reserved!";
+                this.msgType = "success";
+                this.title = "";
+                this.selected = "Choose...";
+                this.dismiss = "";
+                this.showMsg = true;
+                setTimeout(() => {
+                    this.showMsg = false;
+                }, 3000);
+                this.$emit("newthesis", res.data);
+            });
         },
         submit() {
             if (this.title !== "" && this.selected !== "Choose...") {
                 this.createThesisReservation();
                 this.dismiss = "modal";
             } else {
-                console.log("Input data error!!!");
+                // Missing data alert
+                this.alertMsg = "Missing data!";
+                this.msgType = "danger";
+                this.showMsg = true;
+                setTimeout(() => {
+                    this.showMsg = false;
+                }, 3000);
             }
         }
     },
@@ -124,68 +135,5 @@ export default {
 #inputState {
     display: inline-block;
     width: 35%;
-}
-
-.slide-left {
-    -webkit-animation: slide-left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)
-        forwards;
-    animation: slide-left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-.slide-left {
-    animation: fade-out 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-@-webkit-keyframes slide-left {
-    0% {
-        -webkit-transform: translateX(0);
-        transform: translateX(100px);
-    }
-    100% {
-        -webkit-transform: translateX(-100px);
-        transform: translateX(0px);
-    }
-}
-@keyframes slide-left {
-    0% {
-        -webkit-transform: translateX(0);
-        transform: translateX(100px);
-    }
-    100% {
-        -webkit-transform: translateX(-100px);
-        transform: translateX(0px);
-    }
-}
-
-.slide-out-right {
-    -webkit-animation: slide-out-right 0.8s
-        cubic-bezier(0.55, 0.085, 0.68, 0.53) 2.8s backwards;
-    animation: slide-out-right 0.8s cubic-bezier(0.55, 0.085, 0.68, 0.53) 2.8s
-        backwards;
-}
-
-@-webkit-keyframes slide-out-right {
-    0% {
-        -webkit-transform: translateX(0);
-        transform: translateX(0);
-        opacity: 1;
-    }
-    100% {
-        -webkit-transform: translateX(1000px);
-        transform: translateX(1000px);
-        opacity: 0;
-    }
-}
-@keyframes slide-out-right {
-    0% {
-        -webkit-transform: translateX(0);
-        transform: translateX(0);
-        opacity: 1;
-    }
-    100% {
-        -webkit-transform: translateX(1000px);
-        transform: translateX(1000px);
-        opacity: 0;
-    }
 }
 </style>

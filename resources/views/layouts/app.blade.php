@@ -23,7 +23,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <style>
-    
+        
         .dropbtn {
             color: rgba(0, 0, 0, 0.5);
             font-size: 14.4px;
@@ -57,7 +57,17 @@
 
         .dropdown:hover .dropdown-content {display: block;}
     
-    
+        @media (max-width: 767px){
+            #userDropdown {
+                text-align: center;
+            }
+
+            #userDropdown > div {
+                width: 50%;
+                margin: auto;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -101,7 +111,7 @@
                         @endunless
 
                         @if(Auth::guard('teacher')->check() || Auth::user())
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown" id="userDropdown">
                                 @if(Auth::check() && Auth::user()->collegeMajor)
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->firstName }} {{ Auth::user()->lastName }} <span class="caret"></span>

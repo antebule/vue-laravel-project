@@ -33,6 +33,11 @@ Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logou
 
 Route::post('thesis/create', 'HomeController@createThesisReservation');
 
+Route::post('thesis/delete', function(Request $request){
+    $thesis = App\ThesisReservation::find($request->id);
+    $thesis->delete();
+});
+
 Route::post('thesis/student', function(Request $request){
     return App\User::find($request->id);
 });

@@ -1,51 +1,24 @@
 <template>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row" id="main">
             <sidebar
                 role="Teacher"
                 :links="['Dashboard', 'Reservations', 'History', 'Students', 'Profile']"
             />
-            <div class="d-flex flex-wrap justify-content-start align-items-start col-10">
-                <div
-                    class="card text-center"
-                    v-for="thesis in theses"
-                    :key="thesis.id"
-                    :class="[ status(thesis.status) ? 'border-success': 'border-danger']"
-                >
-                    <h4 class="card-header">{{ thesis.title }}</h4>
-                    <div class="card-body">
-                        <h5
-                            class="card-title"
-                        >Student: {{ thesis.student.firstName }} {{ thesis.student.lastName }}</h5>
-                        <p class="card-text">
-                            Status:
-                            <b
-                                :class="[ status(thesis.status) ? 'text-success': 'text-danger']"
-                            >{{ thesis.status }}</b>
-                        </p>
-                        <div v-if="thesis.status !== 'Rejected' && thesis.status !== 'Approved'">
-                            <button
-                                class="btn btn-primary"
-                                @click.prevent="thesisAccepted(thesis)"
-                            >Accept</button>
-                            <button
-                                class="btn btn-danger"
-                                @click.prevent="thesisRejected(thesis)"
-                            >Reject</button>
-                        </div>
-                    </div>
-                    <div class="card-footer text-muted">Sent: {{ thesis.created_at | date }}</div>
-                </div>
+            <div class="col-10">
+                <theses :theses="theses" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import sidebar from "./sidebar.vue";
+import theses from "./Theses";
+import sidebar from "./sidebar";
 export default {
     components: {
-        sidebar
+        sidebar,
+        theses
     },
     data() {
         return {
@@ -78,27 +51,10 @@ export default {
                 this.teacher = res.data;
                 this.getThesisRequests(res.data.id);
             });
-        },
-        thesisAccepted(thesis) {
-            thesis.status = "Approved";
-            axios.post("teacher/thesisresponse", thesis).then(res => {});
-        },
-        thesisRejected(thesis) {
-            thesis.status = "Rejected";
-            axios.post("teacher/thesisresponse", thesis).then(res => {});
-        },
-        status(thesisStatus) {
-            return thesisStatus === "Approved" ? true : false;
         }
     },
     created() {
         this.getCurrentTeacher();
-    },
-    filters: {
-        date(date) {
-            date = date.slice(0, 10);
-            return date;
-        }
     }
 };
 </script>
@@ -106,28 +62,22 @@ export default {
 <style scoped>
 .row {
     min-height: calc(100vh - 55px);
+    justify-content: center;
 }
 
-.card {
-    width: 250px;
-    margin: 10px;
-    align-self: stretch;
-    max-height: 300px;
-}
-
-@media (max-width: 700px) {
+@media (max-width: 767px) {
     .d-flex {
         flex-direction: row !important;
-        justify-content: center !important;
+        /* justify-content: center !important; */
+    }
+
+    #main {
+        display: block;
     }
 
     .col-10 {
         flex: 0 0 100%;
         max-width: 100%;
     }
-}
-
-.card-header {
-    min-height: 75px;
 }
 </style>

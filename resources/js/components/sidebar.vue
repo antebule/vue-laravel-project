@@ -5,10 +5,13 @@
             class="d-md-block bg-white sidebar collapse navbar-collapse"
         >
             <div class="sidebar-sticky ml-30">
-                <h1 style="margin-left: 30px;">
-                    <i class="fa fa-user"></i>
-                </h1>
-                <h3>{{this.role}}</h3>
+                <div class="user">
+                    <h1 class="logo">
+                        <i class="fa fa-user"></i>
+                    </h1>
+                    <h3>{{this.role}}</h3>
+                </div>
+
                 <ul class="nav flex-column">
                     <li class="nav-item" v-for="(item, index) in this.links" :key="index">{{item}}</li>
                 </ul>
@@ -32,14 +35,23 @@ export default {
 </script>
 
 <style scoped>
-/* #navbarSupportedContent {
-    padding-right: 50px;
-    height: calc(100vh - 55px);
-} */
+.logo {
+    margin-left: 30px;
+}
 
-/* @media (max-width: 700px) {
-    .d-flex {
-        flex-direction: row;
+@media (max-width: 767px) {
+    .flex-column {
+        flex-direction: row !important;
+        justify-content: center;
     }
-} */
+    .nav-item {
+        padding: 10px;
+    }
+    .user {
+        text-align: center;
+    }
+    .logo {
+        margin: 0;
+    }
+}
 </style>

@@ -34,5 +34,6 @@ class HomeController extends Controller
         $thesis->user_id = $request->user_id;
         $thesis->teacher_id = $request->teacher_id;
         $thesis->save();
+        return $thesis;
     }
 }
