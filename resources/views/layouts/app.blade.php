@@ -93,13 +93,13 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
 
-                        @unless(Auth::check() || Auth::guard('teacher')->check())
+                        @unless(Auth::check() || Auth::guard('teacher')->check() || Auth::guard('admin')->check())
                             <li class="nav-item dropdown">
                                 <button class="dropbtn nav-link">Login</button>
                                 <div class="dropdown-content">
                                     <a href="{{ route('login') }}">Student</a>
                                     <a href="{{ route('teacher.login') }}">Teacher</a>
-                                    <a href="#">Admin</a>
+                                    <a href="{{ route('admin.login') }}">Admin</a>
                                 </div>
                             </li>
                                 
@@ -110,7 +110,7 @@
                             @endif
                         @endunless
 
-                        @if(Auth::guard('teacher')->check() || Auth::user())
+                        @if(Auth::guard('teacher')->check() || Auth::user() || Auth::guard('admin')->check())
                             <li class="nav-item dropdown" id="userDropdown">
                                 @if(Auth::check() && Auth::user()->collegeMajor)
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -128,22 +128,76 @@
                                         </form>                                    
                                         
                                     </div>
+                                    @elseif(!Auth::user())
 
-                                    @else
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::guard('teacher')->user()->firstName }} {{ Auth::guard('teacher')->user()->lastName }} <span class="caret"></span>
-                                    </a>
 
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>                                  
-                                        
-                                        <form id="logout-form" action="{{ route('teacher.logout') }}" method="GET" style="display: none;">
-                                            @csrf
-                                        </form>
-                                    </div>
+                                        @guest
+                                            @auth('admin')
+                                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                                {{ Auth::guard('admin')->user()->name }} <span class="caret"></span>
+                                                </a>
+
+                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                        {{ __('Logout') }}
+                                                    </a>                                  
+                                                    
+                                                    <form id="logout-form" action="{{ route('admin.logout') }}" method="GET" style="display: none;">
+                                                        @csrf
+                                                    </form>
+                                                </div>
+                                            @endauth
+                                            @guest('admin')
+                                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                                    {{ Auth::guard('teacher')->user()->firstName }} {{ Auth::guard('teacher')->user()->lastName }}<span class="caret"></span>
+                                                </a>
+
+                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                        {{ __('Logout') }}
+                                                    </a>                                  
+                                                    
+                                                    <form id="logout-form" action="{{ route('teacher.logout') }}" method="GET" style="display: none;">
+                                                        @csrf
+                                                    </form>
+                                                </div>
+                                            @endguest
+                                        @endguest
+
+                                        @elseif(Auth::guard('admin')->check() && Auth::user()->name)
+                                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            {{ Auth::guard('admin')->user()->name }} <span class="caret"></span>
+                                            </a>
+
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    {{ __('Logout') }}
+                                                </a>                                  
+                                                
+                                                <form id="logout-form" action="{{ route('admin.logout') }}" method="GET" style="display: none;">
+                                                    @csrf
+                                                </form>
+                                            </div>
+
+                                        @elseif(Auth::guard('teacher')->check())
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            {{ Auth::guard('teacher')->user()->firstName }} {{ Auth::guard('teacher')->user()->lastName }}<span class="caret"></span>
+                                        </a>
+
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a>                                  
+                                            
+                                            <form id="logout-form" action="{{ route('teacher.logout') }}" method="GET" style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </div>
+
                                 @endif
                             </li> 
                         @endif 

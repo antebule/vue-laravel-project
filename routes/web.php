@@ -14,38 +14,47 @@ use Illuminate\Http\Request;
 |
 */
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('user/current', function(){
-    return Auth::user();
+
+// User routes
+Route::prefix('user')->group(function(){
+    Route::get('/current', function(){
+        return Auth::user();
+    });
+    
+    Route::post('/thesisrequests', function(Request $request){
+        return App\ThesisReservation::where('user_id', '=', $request->id)->get();
+    });
+
+    Route::get('/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 });
 
-Route::post('user/thesisrequests', function(Request $request){
-    return App\ThesisReservation::where('user_id', '=', $request->id)->get();
+// Thesis routes
+Route::prefix('thesis')->group(function(){
+    Route::post('/create', 'HomeController@createThesisReservation');
+
+    Route::post('/delete', function(Request $request){
+        $thesis = App\ThesisReservation::find($request->id);
+        $thesis->delete();
+    });
+
+    Route::post('/student', function(Request $request){
+        return App\User::find($request->id);
+    });
+
+    Route::post('/teacher', function(Request $request){
+        return App\Teacher::find($request->id);
+    });
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
-
-Route::post('thesis/create', 'HomeController@createThesisReservation');
-
-Route::post('thesis/delete', function(Request $request){
-    $thesis = App\ThesisReservation::find($request->id);
-    $thesis->delete();
-});
-
-Route::post('thesis/student', function(Request $request){
-    return App\User::find($request->id);
-});
-
-Route::post('thesis/teacher', function(Request $request){
-    return App\Teacher::find($request->id);
-});
-
+// Teacher routes
 Route::prefix('teacher')->group(function(){
     Route::get('/login', 'Auth\TeacherLoginController@showLoginForm')->name('teacher.login');
     Route::post('/login', 'Auth\TeacherLoginController@login')->name('teacher.login.submit');
@@ -67,4 +76,12 @@ Route::prefix('teacher')->group(function(){
         $thesis->status = $request->status;
         $thesis->update();
     });
+});
+
+// Admin routes
+Route::prefix('admin')->group(function(){
+    Route::get('/', 'AdminController@index')->name('admin.administration');
+    Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+    Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
 });

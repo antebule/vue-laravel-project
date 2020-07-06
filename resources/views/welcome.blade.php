@@ -107,52 +107,48 @@
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
-
-                        @guest('teacher')
-                            <div class="dropdown">
-                                <button class="dropbtn">Login</button>
-                                <div class="dropdown-content">
-                                    <a href="{{ route('teacher.login') }}">Teacher</a>
-                                    <a href="#">Admin</a>
-                                </div>
-                            </div>
-
-                            <!-- @if (Route::has('register'))
-                                <a href="{{ route('register') }}">Register</a>
-                            @endif -->
-                        @endguest
                     @endauth
 
                     @auth('teacher')
                         <a href="{{ url('/teacher') }}">Dashboard</a>
-
-                        @guest
-                            <div class="dropdown">
-                                <button class="dropbtn">Login</button>
-                                <div class="dropdown-content">
-                                    <a href="{{ route('login') }}">Student</a>
-                                    <a href="#">Admin</a>
-                                </div>
-                            </div>
-
-                            <!-- @if (Route::has('register'))
-                                <a href="{{ route('register') }}">Register</a>
-                            @endif -->
-                        @endguest
                     @endauth
 
-                    @unless (Auth::check() || Auth::guard('teacher')->check())
+                    @auth('admin')
+                        <a href="{{ url('/admin') }}">Administration</a>
+                    @endauth
+
+                    @unless (Auth::check() || Auth::guard('teacher')->check() || Auth::guard('admin')->check())
                             <div class="dropdown">
                                 <button class="dropbtn">Login</button>
                                 <div class="dropdown-content">
                                     <a href="{{ route('login') }}">Student</a>
                                     <a href="{{ route('teacher.login') }}">Teacher</a>
-                                    <a href="#">Admin</a>
+                                    <a href="{{ route('admin.login') }}">Admin</a>
                                 </div>
                             </div>
 
                             <a href="{{ route('register') }}">Register</a>
                     @endunless
+
+                    @if (Auth::check() || Auth::guard('teacher')->check() || Auth::guard('admin')->check())
+                        @if(Auth::check() && Auth::guard('teacher')->check() && Auth::guard('admin')->check())
+                            @else
+                                <div class="dropdown">
+                                    <button class="dropbtn">Login</button>
+                                    <div class="dropdown-content">
+                                        @guest('web')
+                                        <a href="{{ route('login') }}">Student</a>
+                                        @endguest
+                                        @guest('teacher')
+                                        <a href="{{ route('teacher.login') }}">Teacher</a>
+                                        @endguest
+                                        @guest('admin')
+                                        <a href="{{ route('admin.login') }}">Admin</a>
+                                        @endguest
+                                    </div>
+                                </div>
+                        @endif
+                    @endif
 
                 </div>
             
