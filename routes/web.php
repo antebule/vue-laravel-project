@@ -33,6 +33,10 @@ Route::prefix('user')->group(function(){
         return App\ThesisReservation::where('user_id', '=', $request->id)->get();
     });
 
+    Route::get('/all', function(){
+        return App\User::all();
+    });
+
     Route::get('/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 });
 
@@ -84,4 +88,61 @@ Route::prefix('admin')->group(function(){
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
     Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+    Route::post('/deleteTeacher', function(Request $request){
+        $teacher = App\Teacher::find($request->id);
+        $teacher->delete();
+        return $request;
+    });
+    
+    Route::post('/deleteStudent', function(Request $request){
+        $user = App\User::find($request->id);        
+        $user->delete();
+        return $request;
+    });
+
+    Route::post('/editstudent', function(Request $request){
+        $user = App\User::find($request->id);
+        $user->firstName = $request->firstName;
+        $user->lastName = $request->lastName;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->indexNumber = $request->indexNumber;
+        $user->collegeMajor = $request->collegeMajor;
+        $user->studyYear = $request->studyYear;        
+        $user->update();
+        return $user;
+    });
+
+    Route::post('/editteacher', function(Request $request){
+        $teacher = App\Teacher::find($request->id);
+        $teacher->firstName = $request->firstName;
+        $teacher->lastName = $request->lastName;
+        $teacher->email = $request->email;
+        $teacher->password = Hash::make($request->password);      
+        $teacher->update();
+        return $teacher;
+    });
+
+    Route::post('/addstudent', function(Request $request){
+        $student = new App\User;
+        $student->firstName = $request->firstName;
+        $student->lastName = $request->lastName;
+        $student->email = $request->email;
+        $student->password = Hash::make($request->password);
+        $student->indexNumber = $request->indexNumber;
+        $student->collegeMajor = $request->collegeMajor;
+        $student->studyYear = $request->studyYear;
+        $student->save();
+        return $student;
+    });
+
+    Route::post('/addteacher', function(Request $request){
+        $teacher = new App\Teacher;
+        $teacher->firstName = $request->firstName;
+        $teacher->lastName = $request->lastName;
+        $teacher->email = $request->email;
+        $teacher->password = Hash::make($request->password);
+        $teacher->save();
+        return $teacher;
+    });
 });

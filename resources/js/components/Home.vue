@@ -3,7 +3,7 @@
         <div class="row" id="main">
             <sidebar
                 role="Student"
-                :links="['Dashboard', 'Reservations', 'History', 'Teachers', 'Profile']"
+                :links="['Home', 'Reservations', 'History', 'Teachers', 'Profile']"
             />
             <div class="col-10">
                 <modal @newthesis="newThesisAdded" />
