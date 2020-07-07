@@ -61,8 +61,8 @@
                         <input
                             class="form-control form-control-lg input"
                             type="text"
-                            placeholder="collegeMajor"
-                            v-model="collegeMajor"
+                            placeholder="studyGroup"
+                            v-model="studyGroup"
                         />
                         <input
                             class="form-control form-control-lg input"
@@ -97,7 +97,7 @@ export default {
             email: "",
             password: "",
             indexNumber: "",
-            collegeMajor: "",
+            studyGroup: "",
             studyYear: "",
             dismiss: ""
         };
@@ -110,7 +110,7 @@ export default {
                 this.password === "" ||
                 this.email === "" ||
                 this.indexNumber === "" ||
-                this.collegeMajor === "" ||
+                this.studyGroup === "" ||
                 this.studyYear === ""
             ) {
                 console.log("Missing data");
@@ -122,7 +122,7 @@ export default {
                     email: this.email,
                     password: this.password,
                     indexNumber: this.indexNumber,
-                    collegeMajor: this.collegeMajor,
+                    studyGroup: this.studyGroup,
                     studyYear: this.studyYear
                 };
                 axios.post("admin/addstudent", newUser).then(res => {

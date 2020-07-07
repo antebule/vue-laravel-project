@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('indexNumber')->unique();
-            $table->string('collegeMajor');
+            $table->string('studyGroup');
             $table->string('studyYear');
             $table->rememberToken();
             $table->timestamps();

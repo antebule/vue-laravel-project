@@ -10,12 +10,7 @@
                     <div id="students">
                         <h2 style="text-align: center;">Students</h2>
                         <table class="table table-striped">
-                            <!-- <caption>Students</caption> -->
-
                             <thead>
-                                <!-- <tr>
-                                <th scope="col">Students</th>
-                                </tr>-->
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
@@ -51,7 +46,6 @@
                     <div id="teachers">
                         <h2 style="text-align: center;">Teachers</h2>
                         <table class="table table-striped">
-                            <!-- <caption>Teachers</caption> -->
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>

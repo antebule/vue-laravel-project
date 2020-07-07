@@ -68,12 +68,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="collegeMajor" class="col-md-4 col-form-label text-md-right">{{ __('College Major') }}</label>
+                            <label for="studyGroup" class="col-md-4 col-form-label text-md-right">{{ __('Study Group') }}</label>
 
                             <div class="col-md-6">
-                                <input id="collegeMajor" type="text" class="form-control @error('collegeMajor') is-invalid @enderror" name="collegeMajor" value="{{ old('collegeMajor') }}" required>
+                                <input id="studyGroup" type="text" class="form-control @error('studyGroup') is-invalid @enderror" name="studyGroup" value="{{ old('studyGroup') }}" required>
 
-                                @error('collegeMajor')
+                                @error('studyGroup')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

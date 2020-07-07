@@ -107,7 +107,7 @@ Route::prefix('admin')->group(function(){
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->indexNumber = $request->indexNumber;
-        $user->collegeMajor = $request->collegeMajor;
+        $user->studyGroup = $request->studyGroup;
         $user->studyYear = $request->studyYear;        
         $user->update();
         return $user;
@@ -130,7 +130,7 @@ Route::prefix('admin')->group(function(){
         $student->email = $request->email;
         $student->password = Hash::make($request->password);
         $student->indexNumber = $request->indexNumber;
-        $student->collegeMajor = $request->collegeMajor;
+        $student->studyGroup = $request->studyGroup;
         $student->studyYear = $request->studyYear;
         $student->save();
         return $student;

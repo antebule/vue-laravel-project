@@ -12,10 +12,16 @@
                     v-if="thesis.teacher"
                     class="card-title"
                 >Teacher: {{ thesis.teacher.firstName }} {{ thesis.teacher.lastName }}</h5>
-                <h5
-                    v-else
-                    class="card-title"
-                >Student: {{ thesis.student.firstName }} {{ thesis.student.lastName }}</h5>
+                <div v-else>
+                    <h5
+                        class="card-title"
+                    >Student: {{ thesis.student.firstName }} {{ thesis.student.lastName }}</h5>
+                    <h6 class="card-text">Study Group: {{thesis.student.studyGroup}}</h6>
+                    <h6
+                        class="card-text"
+                        style="margin-bottom: 6px;"
+                    >Study Year: {{thesis.student.studyYear}}</h6>
+                </div>
                 <p class="card-text">
                     Status:
                     <b

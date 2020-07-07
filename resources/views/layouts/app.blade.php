@@ -112,7 +112,7 @@
 
                         @if(Auth::guard('teacher')->check() || Auth::user() || Auth::guard('admin')->check())
                             <li class="nav-item dropdown" id="userDropdown">
-                                @if(Auth::check() && Auth::user()->collegeMajor)
+                                @if(Auth::check() && Auth::user()->studyGroup)
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->firstName }} {{ Auth::user()->lastName }} <span class="caret"></span>
                                     </a>

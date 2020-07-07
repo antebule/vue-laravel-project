@@ -2006,7 +2006,7 @@ __webpack_require__.r(__webpack_exports__);
       email: "",
       password: "",
       indexNumber: "",
-      collegeMajor: "",
+      studyGroup: "",
       studyYear: "",
       dismiss: ""
     };
@@ -2015,7 +2015,7 @@ __webpack_require__.r(__webpack_exports__);
     addStudent: function addStudent() {
       var _this = this;
 
-      if (this.firstName === "" || this.lastName === "" || this.password === "" || this.email === "" || this.indexNumber === "" || this.collegeMajor === "" || this.studyYear === "") {
+      if (this.firstName === "" || this.lastName === "" || this.password === "" || this.email === "" || this.indexNumber === "" || this.studyGroup === "" || this.studyYear === "") {
         console.log("Missing data");
       } else {
         this.dismiss = "modal";
@@ -2025,7 +2025,7 @@ __webpack_require__.r(__webpack_exports__);
           email: this.email,
           password: this.password,
           indexNumber: this.indexNumber,
-          collegeMajor: this.collegeMajor,
+          studyGroup: this.studyGroup,
           studyYear: this.studyYear
         };
         axios.post("admin/addstudent", newUser).then(function (res) {
@@ -2169,12 +2169,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AddTeacherModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddTeacherModal */ "./resources/js/components/AddTeacherModal.vue");
 /* harmony import */ var _EditStudentModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EditStudentModal */ "./resources/js/components/EditStudentModal.vue");
 /* harmony import */ var _EditTeacherModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EditTeacherModal */ "./resources/js/components/EditTeacherModal.vue");
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2569,7 +2563,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     editStudent: function editStudent() {
-      if (this.student.firstName === "" || this.student.lastName === "" || this.student.password === "" || this.teacher.password === undefined || this.student.email === "" || this.student.indexNumber === "" || this.student.collegeMajor === "" || this.student.studyYear === "") {
+      if (this.student.firstName === "" || this.student.lastName === "" || this.student.password === "" || this.teacher.password === undefined || this.student.email === "" || this.student.indexNumber === "" || this.student.studyGroup === "" || this.student.studyYear === "") {
         console.log("Missing data");
       } else {
         this.dismiss = "modal";
@@ -2951,6 +2945,12 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AlertMessage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AlertMessage */ "./resources/js/components/AlertMessage.vue");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -40033,19 +40033,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.collegeMajor,
-                    expression: "collegeMajor"
+                    value: _vm.studyGroup,
+                    expression: "studyGroup"
                   }
                 ],
                 staticClass: "form-control form-control-lg input",
-                attrs: { type: "text", placeholder: "collegeMajor" },
-                domProps: { value: _vm.collegeMajor },
+                attrs: { type: "text", placeholder: "studyGroup" },
+                domProps: { value: _vm.studyGroup },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.collegeMajor = $event.target.value
+                    _vm.studyGroup = $event.target.value
                   }
                 }
               }),
@@ -40835,13 +40835,13 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.editingStudent.collegeMajor,
-                    expression: "editingStudent.collegeMajor"
+                    value: _vm.editingStudent.studyGroup,
+                    expression: "editingStudent.studyGroup"
                   }
                 ],
                 staticClass: "form-control form-control-lg input",
-                attrs: { type: "text", placeholder: "collegeMajor" },
-                domProps: { value: _vm.editingStudent.collegeMajor },
+                attrs: { type: "text", placeholder: "studyGroup" },
+                domProps: { value: _vm.editingStudent.studyGroup },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
@@ -40849,7 +40849,7 @@ var render = function() {
                     }
                     _vm.$set(
                       _vm.editingStudent,
-                      "collegeMajor",
+                      "studyGroup",
                       $event.target.value
                     )
                   }
@@ -41449,12 +41449,33 @@ var render = function() {
                         _vm._s(thesis.teacher.lastName)
                     )
                   ])
-                : _c("h5", { staticClass: "card-title" }, [
-                    _vm._v(
-                      "Student: " +
-                        _vm._s(thesis.student.firstName) +
-                        " " +
-                        _vm._s(thesis.student.lastName)
+                : _c("div", [
+                    _c("h5", { staticClass: "card-title" }, [
+                      _vm._v(
+                        "Student: " +
+                          _vm._s(thesis.student.firstName) +
+                          " " +
+                          _vm._s(thesis.student.lastName)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("h6", { staticClass: "card-text" }, [
+                      _vm._v(
+                        "Study Group: " + _vm._s(thesis.student.studyGroup)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "h6",
+                      {
+                        staticClass: "card-text",
+                        staticStyle: { "margin-bottom": "6px" }
+                      },
+                      [
+                        _vm._v(
+                          "Study Year: " + _vm._s(thesis.student.studyYear)
+                        )
+                      ]
                     )
                   ]),
               _vm._v(" "),

@@ -53,8 +53,8 @@
                         <input
                             class="form-control form-control-lg input"
                             type="text"
-                            placeholder="collegeMajor"
-                            v-model="editingStudent.collegeMajor"
+                            placeholder="studyGroup"
+                            v-model="editingStudent.studyGroup"
                         />
                         <input
                             class="form-control form-control-lg input"
@@ -107,7 +107,7 @@ export default {
                 this.teacher.password === undefined ||
                 this.student.email === "" ||
                 this.student.indexNumber === "" ||
-                this.student.collegeMajor === "" ||
+                this.student.studyGroup === "" ||
                 this.student.studyYear === ""
             ) {
                 console.log("Missing data");
