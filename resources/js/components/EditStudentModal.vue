@@ -70,7 +70,7 @@
                             class="btn btn-primary"
                             @click="editStudent()"
                             :data-dismiss="dismiss"
-                        >Add</button>
+                        >Save</button>
                     </div>
                 </div>
             </div>
@@ -113,7 +113,6 @@ export default {
                 console.log("Missing data");
             } else {
                 this.dismiss = "modal";
-                console.log(this.student);
                 axios.post("admin/editstudent", this.student).then(res => {
                     // this.$emit("studentedited", res.data);
                 });

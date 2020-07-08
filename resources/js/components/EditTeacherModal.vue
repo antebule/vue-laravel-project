@@ -60,7 +60,7 @@
                             class="btn btn-primary"
                             @click="editTeacher()"
                             :data-dismiss="dismiss"
-                        >Add</button>
+                        >Save</button>
                     </div>
                 </div>
             </div>

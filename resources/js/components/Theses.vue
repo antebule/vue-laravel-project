@@ -117,7 +117,7 @@ export default {
     width: 250px;
     margin: 10px;
     align-self: stretch;
-    max-height: 300px;
+    /* max-height: 300px; */
 }
 
 .card-header {

@@ -2567,7 +2567,6 @@ __webpack_require__.r(__webpack_exports__);
         console.log("Missing data");
       } else {
         this.dismiss = "modal";
-        console.log(this.student);
         axios.post("admin/editstudent", this.student).then(function (res) {// this.$emit("studentedited", res.data);
         });
       }
@@ -7819,7 +7818,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card[data-v-4ca53f0a] {\r\n    width: 250px;\r\n    margin: 10px;\r\n    align-self: stretch;\r\n    max-height: 300px;\n}\n.card-header[data-v-4ca53f0a] {\r\n    min-height: 75px;\n}\r\n", ""]);
+exports.push([module.i, "\n.card[data-v-4ca53f0a] {\r\n    width: 250px;\r\n    margin: 10px;\r\n    align-self: stretch;\r\n    /* max-height: 300px; */\n}\n.card-header[data-v-4ca53f0a] {\r\n    min-height: 75px;\n}\r\n", ""]);
 
 // exports
 
@@ -40904,7 +40903,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Add")]
+                [_vm._v("Save")]
               )
             ])
           ])
@@ -41104,7 +41103,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Add")]
+                [_vm._v("Save")]
               )
             ])
           ])
